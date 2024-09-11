@@ -9,7 +9,7 @@ const userSchema = new Schema(
         unique:true,
         lowercase:true,
         trim:true,
-        index:true
+        index:true // for search optimization
       },
       email:{
         type:String,
@@ -61,8 +61,9 @@ userSchema.methods.isPasswordCorrect = async function(password){
   return await bcrypt.compare(password,this.password)
 }
 
-userSchema,methods.generateAccessToken = function(){
+userSchema.methods.generateAccessToken = function(){
   return jwt.sign(
+    //payload
     {
       _id:this._id,
       email:this.email,
